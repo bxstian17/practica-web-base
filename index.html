@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="es">
   <head>
@@ -5,52 +6,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Práctica web — Informática III</title>
   </head>
+
   <body class="bg-gray-100 text-gray-800">
 
-    <!-- PARTE A: comprobación de Tailwind.
-         Si esta barra se ve azul con texto blanco, Tailwind está funcionando.
-         Bórrala cuando termines la Parte A. -->
+    <!-- PARTE A: comprobación de Tailwind -->
     <div class="bg-blue-600 text-white text-center p-4 font-semibold">
       ✅ Si ves esta barra azul, Tailwind está funcionando
     </div>
 
-    <!-- EJERCICIO 1: construye aquí tu página (header, main con #catalogo, footer).
-         Las instrucciones están en el README. -->
-
-    <script type="module" src="/src/main.js"></script>
-  </body>
-</html>
-<head> 
- <header class="p-6 text-center">
-        <h1 class="text-3xl font-bold">ROCKER BURGUER</h1>
-        <p class="text-gray-600">El triangulo de la Sabrosura</p>
+    <!-- ENCABEZADO -->
+    <header class="p-6 text-center">
+      <h1 class="text-3xl font-bold">ROCKER BURGUER</h1>
+      <p class="text-gray-600">El triangulo de la Sabrosura</p>
     </header>
-  
-  <main class="p-6">
-        <div id="catalogo" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"> 
-        </div>
-         <aside class="mt-8 bg-white rounded-lg shadow p-4">
-        <h2 class="text-2xl font-bold mb-4">Mi pedido</h2>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="p-6">
+
+      <!-- CATÁLOGO -->
+      <div
+        id="catalogo"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      </div>
+
+      <!-- MI PEDIDO -->
+      <aside class="mt-8 bg-white rounded-lg shadow p-4">
+
+        <h2 class="text-2xl font-bold mb-4">
+          Mi pedido
+        </h2>
 
         <ul id="lista-pedido" class="mb-4">
         </ul>
 
         <p id="total" class="text-xl font-bold mb-4">
-            Total: $0
+          Total: $0
         </p>
 
         <button
-            id="btn-vaciar"
-            class="bg-red-500 text-white font-semibold p-2 rounded-lg hover:bg-red-700">
-            Vaciar pedido
+          id="btn-vaciar"
+          class="bg-red-500 text-white font-semibold p-2 rounded-lg hover:bg-red-700">
+          Vaciar pedido
         </button>
-    </aside>
-     </main>
 
+        <form id="form-cliente" class="mt-6">
 
+  <div class="mb-4">
+    <label for="nombre" class="block font-semibold mb-1">
+      Nombre
+    </label>
 
+    <input
+      type="text"
+      id="nombre"
+      class="w-full border rounded-lg p-2"
+    >
 
+    <p id="error-nombre" class="text-sm text-red-600 hidden"></p>
+  </div>
 
-     <footer class="p-4 text-center font-bold">
-        Equipo: Modelo V
+  <div class="mb-4">
+    <label for="telefono" class="block font-semibold mb-1">
+      Teléfono
+    </label>
+
+    <input
+      type="text"
+      id="telefono"
+      class="w-full border rounded-lg p-2"
+    >
+
+    <p id="error-telefono" class="text-sm text-red-600 hidden"></p>
+  </div>
+
+  <div class="mb-4">
+    <label for="correo" class="block font-semibold mb-1">
+      Correo
+    </label>
+
+    <input
+      type="text"
+      id="correo"
+      class="w-full border rounded-lg p-2"
+    >
+
+    <p id="error-correo" class="text-sm text-red-600 hidden"></p>
+  </div>
+
+  <p id="error-pedido" class="text-sm text-red-600 hidden"></p>
+
+  <button
+    type="submit"
+    class="bg-green-500 text-white font-semibold p-2 rounded-lg hover:bg-green-700">
+    Confirmar pedido
+  </button>
+
+</form>
+
+      </aside>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="p-4 text-center font-bold">
+      Equipo: Modelo V
     </footer>
+
+    <script type="module" src="/src/main.js"></script>
+
+  </body>
+</html>
+```

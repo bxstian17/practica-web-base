@@ -92,3 +92,91 @@ btnVaciar.addEventListener('click', () => {
 // ------------------------------------------------------------
 
 // Escribe aquí tu código del Ejercicio 4
+// EJERCICIO 5 
+const formCliente = document.getElementById('form-cliente')
+
+const nombre = document.getElementById('nombre')
+const telefono = document.getElementById('telefono')
+const correo = document.getElementById('correo')
+
+const errorNombre = document.getElementById('error-nombre')
+const errorTelefono = document.getElementById('error-telefono')
+const errorCorreo = document.getElementById('error-correo')
+const errorPedido = document.getElementById('error-pedido')
+
+// Función para mostrar un error
+function mostrarError(campo, error, mensaje) {
+  error.textContent = mensaje
+  error.classList.remove('hidden')
+  campo.classList.add('border-red-500')
+}
+
+// Función para limpiar un error
+function limpiarError(campo, error) {
+  error.textContent = ''
+  error.classList.add('hidden')
+  campo.classList.remove('border-red-500')
+}
+
+// Escuchar el envío del formulario
+formCliente.addEventListener('submit', (evento) => {
+  evento.preventDefault()
+
+  // Limpiar errores anteriores
+  limpiarError(nombre, errorNombre)
+  limpiarError(telefono, errorTelefono)
+  limpiarError(correo, errorCorreo)
+
+  errorPedido.textContent = ''
+  errorPedido.classList.add('hidden')
+
+  // Obtener los datos
+  const nombreValor = nombre.value.trim()
+  const telefonoValor = telefono.value.trim()
+  const correoValor = correo.value.trim()
+
+  let valido = true
+
+  // Validar nombre
+  if (!nombreValor) {
+    mostrarError(
+      nombre,
+      errorNombre,
+      'El nombre es obligatorio.'
+    )
+    valido = false
+  }
+
+  // Validar teléfono
+  if (!/^\d{10}$/.test(telefonoValor)) {
+    mostrarError(
+      telefono,
+      errorTelefono,
+      'El teléfono debe tener exactamente 10 dígitos.'
+    )
+    valido = false
+  }
+
+  // Validar correo
+  if (!/^\S+@\S+\.\S+$/.test(correoValor)) {
+    mostrarError(
+      correo,
+      errorCorreo,
+      'Ingresa un correo válido.'
+    )
+    valido = false
+  }
+
+  // Validar que exista un pedido
+  if (pedido.length === 0) {
+    errorPedido.textContent = 'Debes agregar al menos un producto al pedido.'
+    errorPedido.classList.remove('hidden')
+    valido = false
+  }
+
+  // Si hay algún error, no continuar
+  if (!valido) return
+
+  // Si todo es correcto
+  alert('¡Pedido confirmado correctamente!')
+})
