@@ -46,6 +46,19 @@ mostrarProductos(productos)
 // ------------------------------------------------------------
 const pedido = []
 
+const pedidosRegistrados = []
+
+const ESTADOS = [
+  'Pendiente',
+  'En preparación',
+  'Entregado'
+]
+const COLORES = {
+  'Pendiente': 'bg-yellow-100 border-yellow-400',
+  'En preparación': 'bg-blue-100 border-blue-400',
+  'Entregado': 'bg-green-100 border-green-400'
+}
+
 // Escribe aquí tu código del Ejercicio 3
 
 const listaPedido = document.getElementById('lista-pedido')
@@ -104,7 +117,7 @@ const errorTelefono = document.getElementById('error-telefono')
 const errorCorreo = document.getElementById('error-correo')
 const errorPedido = document.getElementById('error-pedido')
 
-// Función para mostrar un error
+// Función para mostrar error
 function mostrarError(campo, error, mensaje) {
   error.textContent = mensaje
   error.classList.remove('hidden')
@@ -118,11 +131,11 @@ function limpiarError(campo, error) {
   campo.classList.remove('border-red-500')
 }
 
-// Escuchar el envío del formulario
+// envío del formulario
 formCliente.addEventListener('submit', (evento) => {
   evento.preventDefault()
 
-  // Limpiar errores anteriores
+  // limpiar errores anteriores
   limpiarError(nombre, errorNombre)
   limpiarError(telefono, errorTelefono)
   limpiarError(correo, errorCorreo)
@@ -146,7 +159,6 @@ formCliente.addEventListener('submit', (evento) => {
     )
     valido = false
   }
-
   // Validar teléfono
   if (!/^\d{10}$/.test(telefonoValor)) {
     mostrarError(
@@ -156,7 +168,6 @@ formCliente.addEventListener('submit', (evento) => {
     )
     valido = false
   }
-
   // Validar correo
   if (!/^\S+@\S+\.\S+$/.test(correoValor)) {
     mostrarError(
@@ -177,6 +188,108 @@ formCliente.addEventListener('submit', (evento) => {
   // Si hay algún error, no continuar
   if (!valido) return
 
-  // Si todo es correcto
+ 
+// Crear el pedido registrado
+const nuevoPedido = {
+  id: Date.now(),
+  nombre: nombreValor,
+  telefono: telefonoValor,
+  correo: correoValor,
+  productos: [...pedido],
+  total: pedido.reduce((suma, p) => suma + p.precio, 0),
+  estado: 'Pendiente'
+}
+
+pedidosRegistrados.push(nuevoPedido)
+
+// Vaciar el pedido actual
+pedido.length = 0
+
+// Limpiar el formulario
+formCliente.reset()
+
+// Actualizar la vista del pedido
+mostrarPedido()
+
+function mostrarPedidosRegistrados() {
+  const pedidosRegistradosContenedor = document.getElementById('pedidos-registrados')
+
+pedidosRegistradosContenedor.addEventListener('click', (evento) => {
+
+  const boton = evento.target.closest('button[data-avanzar]')
+
+  if (!boton) return
+
+  const id = Number(boton.dataset.avanzar)
+
+  const pedidoRegistrado = pedidosRegistrados.find(
+    p => p.id === id
+  )
+
+  if (!pedidoRegistrado) return
+
+  const posicionActual = ESTADOS.indexOf(pedidoRegistrado.estado)
+
+  if (posicionActual < ESTADOS.length - 1) {
+    pedidoRegistrado.estado = ESTADOS[posicionActual + 1]
+  }
+
+  mostrarPedidosRegistrados()
+})
+  const contenedor = document.getElementById('pedidos-registrados')
+
+  contenedor.innerHTML = pedidosRegistrados.map(p => `
+    <article class="${COLORES[p.estado]} border rounded-lg shadow p-4">
+
+      <h3 class="text-xl font-bold">
+        Cliente: ${p.nombre}
+      </h3>
+
+      <p class="mt-2">
+        Teléfono: ${p.telefono}
+      </p>
+
+      <p>
+        Correo: ${p.correo}
+      </p>
+
+      <h4 class="font-semibold mt-4">
+        Productos:
+      </h4>
+
+      <ul class="list-disc ml-5">
+        ${p.productos.map(producto => `
+          <li>${producto.nombre} - $${producto.precio}</li>
+        `).join('')}
+      </ul>
+
+      <p class="font-bold mt-4">
+        Total: $${p.total}
+      </p>
+
+      <p class="mt-2 font-semibold">
+        Estado: ${p.estado}
+      </p>
+
+      ${p.estado !== 'Entregado' ? `
+  <button
+    data-avanzar="${p.id}"
+    class="mt-4 bg-purple-500 text-white font-semibold p-2 rounded-lg hover:bg-purple-700">
+    Avanzar estado
+  </button>
+
+` : ''
+
+}
+
+    </article>
+  `).join('')
+}
+
+// Dibujar los pedidos registrados
+mostrarPedidosRegistrados()
+
+
+
   alert('¡Pedido confirmado correctamente!')
 })
