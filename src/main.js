@@ -212,7 +212,31 @@ formCliente.reset()
 mostrarPedido()
 
 function mostrarPedidosRegistrados() {
+  const contadorTodos = pedidosRegistrados.length
+
+const contadorPendiente = pedidosRegistrados.filter(
+  p => p.estado === 'Pendiente'
+).length
+
+const contadorPreparacion = pedidosRegistrados.filter(
+  p => p.estado === 'En preparación'
+).length
+
+const contadorEntregado = pedidosRegistrados.filter(
+  p => p.estado === 'Entregado'
+).length
+
+
   const pedidosRegistradosContenedor = document.getElementById('pedidos-registrados')
+
+  const buscarPedido = document.getElementById('buscar-pedido')   
+
+const filtroTodos = document.getElementById('filtro-todos')
+const filtroPendiente = document.getElementById('filtro-pendiente')
+const filtroPreparacion = document.getElementById('filtro-preparacion')
+const filtroEntregado = document.getElementById('filtro-entregado')
+
+let estadoFiltro = 'Todos'
 
 pedidosRegistradosContenedor.addEventListener('click', (evento) => {
 
@@ -236,9 +260,99 @@ pedidosRegistradosContenedor.addEventListener('click', (evento) => {
 
   mostrarPedidosRegistrados()
 })
+
+filtroTodos.addEventListener('click', () => {
+  estadoFiltro = 'Todos'
+  mostrarPedidosRegistrados()
+})
+
+filtroPendiente.addEventListener('click', () => {
+  estadoFiltro = 'Pendiente'
+  mostrarPedidosRegistrados()
+})
+
+filtroPreparacion.addEventListener('click', () => {
+  estadoFiltro = 'En preparación'
+  mostrarPedidosRegistrados()
+})
+
+filtroEntregado.addEventListener('click', () => {
+  estadoFiltro = 'Entregado'
+  mostrarPedidosRegistrados()
+})
+
+
+buscarPedido.addEventListener('input', () => {
+  const texto = buscarPedido.value.toLowerCase().trim()
+
+  const pedidosFiltrados = pedidosRegistrados.filter(p =>
+    p.nombre.toLowerCase().includes(texto)
+  )
+
   const contenedor = document.getElementById('pedidos-registrados')
 
-  contenedor.innerHTML = pedidosRegistrados.map(p => `
+  contenedor.innerHTML = pedidosFiltrados.map(p => `
+    <article class="${COLORES[p.estado]} border rounded-lg shadow p-4">
+
+      <h3 class="text-xl font-bold">
+        Cliente: ${p.nombre}
+      </h3>
+
+      <p class="mt-2">
+        Teléfono: ${p.telefono}
+      </p>
+
+      <p>
+        Correo: ${p.correo}
+      </p>
+
+      <h4 class="font-semibold mt-4">
+        Productos:
+      </h4>
+
+      <ul class="list-disc ml-5">
+        ${p.productos.map(producto => `
+          <li>${producto.nombre} - $${producto.precio}</li>
+        `).join('')}
+      </ul>
+
+      <p class="font-bold mt-4">
+        Total: $${p.total}
+      </p>
+
+      <p class="mt-2 font-semibold">
+        Estado: ${p.estado}
+      </p>
+
+      ${p.estado !== 'Entregado' ? `
+        <button
+          data-avanzar="${p.id}"
+          class="mt-4 bg-purple-500 text-white font-semibold p-2 rounded-lg hover:bg-purple-700">
+          Avanzar estado
+        </button>
+      ` : ''}
+
+    </article>
+  `).join('')
+})
+
+  const contenedor = document.getElementById('pedidos-registrados')
+
+
+filtroTodos.textContent = `Todos (${contadorTodos})`
+filtroPendiente.textContent = `Pendientes (${contadorPendiente})`
+filtroPreparacion.textContent = `En preparación (${contadorPreparacion})`
+filtroEntregado.textContent = `Entregados (${contadorEntregado})`
+
+
+
+const pedidosFiltrados = estadoFiltro === 'Todos'
+  ? pedidosRegistrados
+  : pedidosRegistrados.filter(p => p.estado === estadoFiltro)
+  
+  contenedor.innerHTML = pedidosFiltrados.map(p => `
+    
+
     <article class="${COLORES[p.estado]} border rounded-lg shadow p-4">
 
       <h3 class="text-xl font-bold">

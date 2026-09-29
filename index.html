@@ -36,6 +36,46 @@
     Pedidos registrados
   </h2>
 
+
+  <div class="mb-4">
+
+  <input
+    type="text"
+    id="buscar-pedido"
+    placeholder="Buscar por nombre del cliente"
+    class="w-full border rounded-lg p-2 mb-4"
+  >
+
+  <div class="flex flex-wrap gap-2">
+
+    <button
+      id="filtro-todos"
+      class="bg-gray-500 text-white font-semibold p-2 rounded-lg">
+      Todos (0)
+    </button>
+
+    <button
+      id="filtro-pendiente"
+      class="bg-yellow-500 text-white font-semibold p-2 rounded-lg">
+      Pendientes (0)
+    </button>
+
+    <button
+      id="filtro-preparacion"
+      class="bg-blue-500 text-white font-semibold p-2 rounded-lg">
+      En preparación (0)
+    </button>
+
+    <button
+      id="filtro-entregado"
+      class="bg-green-500 text-white font-semibold p-2 rounded-lg">
+      Entregados (0)
+    </button>
+
+  </div>
+
+</div>
+
   <div id="pedidos-registrados" class="space-y-4">
   </div>
 
