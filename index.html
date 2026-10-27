@@ -137,21 +137,50 @@
     </label>
 
     <input
-      type="text"
-      id="correo"
-      class="w-full border rounded-lg p-2"
-    >
+  type="text"
+  id="correo"
+  class="w-full border rounded-lg p-2"
+>
 
-    <p id="error-correo" class="text-sm text-red-600 hidden"></p>
-  </div>
+<p id="error-correo" class="text-sm text-red-600 hidden"></p>
+</div>
 
-  <p id="error-pedido" class="text-sm text-red-600 hidden"></p>
+<!-- NUEVOS CAMPOS DEL PEDIDO -->
 
-  <button
-    type="submit"
-    class="bg-green-500 text-white font-semibold p-2 rounded-lg hover:bg-green-700">
-    Confirmar pedido
-  </button>
+
+<div class="mb-4">
+  <label for="mesa" class="block font-semibold mb-1">
+    Número de mesa
+  </label>
+  <input
+    type="number"
+    id="mesa"
+    min="1"
+    class="w-full border rounded-lg p-2"
+    placeholder="Ej. 4"
+    required
+  >
+</div>
+
+<div class="mb-4">
+  <label for="fecha-compromiso" class="block font-semibold mb-1">
+    Fecha y hora de compromiso
+  </label>
+  <input
+    type="datetime-local"
+    id="fecha-compromiso"
+    class="w-full border rounded-lg p-2"
+    required
+  >
+</div>
+
+<p id="error-pedido" class="text-sm text-red-600 hidden"></p>
+
+<button
+  type="submit"
+  class="bg-green-500 text-white font-semibold p-2 rounded-lg hover:bg-green-700">
+  Confirmar pedido
+</button>
 
 </form>
 

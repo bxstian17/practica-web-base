@@ -111,6 +111,9 @@ const formCliente = document.getElementById('form-cliente')
 const nombre = document.getElementById('nombre')
 const telefono = document.getElementById('telefono')
 const correo = document.getElementById('correo')
+const mesa = document.getElementById('mesa')
+const fechaCompromiso = document.getElementById('fecha-compromiso')
+
 
 const errorNombre = document.getElementById('error-nombre')
 const errorTelefono = document.getElementById('error-telefono')
@@ -169,7 +172,9 @@ formCliente.addEventListener('submit', (evento) => {
     valido = false
   }
   // Validar correo
-  if (!/^\S+@\S+\.\S+$/.test(correoValor)) {
+  
+if (!/^\S+@\S+\.\S+$/.test(correoValor)) {
+
     mostrarError(
       correo,
       errorCorreo,
@@ -190,11 +195,15 @@ formCliente.addEventListener('submit', (evento) => {
 
  
 // Crear el pedido registrado
+
+
 const nuevoPedido = {
   id: Date.now(),
   nombre: nombreValor,
   telefono: telefonoValor,
   correo: correoValor,
+  mesa: mesa.value,
+  fechaCompromiso: fechaCompromiso.value,
   productos: [...pedido],
   total: pedido.reduce((suma, p) => suma + p.precio, 0),
   estado: 'Pendiente'
@@ -292,6 +301,7 @@ buscarPedido.addEventListener('input', () => {
   const contenedor = document.getElementById('pedidos-registrados')
 
   contenedor.innerHTML = pedidosFiltrados.map(p => `
+
     <article class="${COLORES[p.estado]} border rounded-lg shadow p-4">
 
       <h3 class="text-xl font-bold">
@@ -305,6 +315,24 @@ buscarPedido.addEventListener('input', () => {
       <p>
         Correo: ${p.correo}
       </p>
+
+<p><strong>Mesa:</strong> ${p.mesa}</p>
+<p><strong>Fecha compromiso:</strong> ${p.fechaCompromiso ? new Date(p.fechaCompromiso).toLocaleString() : 'No especificada'}</p>
+<p class="mt-2">
+  Modalidad: ${p.modalidad}
+</p>
+
+${p.modalidad === 'Local' ? `
+  <p>
+    Número de mesa: ${p.mesa}
+  </p>
+` : ''}
+
+<p>
+  Fecha de compromiso: ${new Date(p.fechaCompromiso).toLocaleString('es-MX')}
+</p>
+
+
 
       <h4 class="font-semibold mt-4">
         Productos:
@@ -366,6 +394,11 @@ const pedidosFiltrados = estadoFiltro === 'Todos'
       <p>
         Correo: ${p.correo}
       </p>
+
+      
+<p><strong>Mesa:</strong> ${p.mesa}</p>
+${p.modalidad === 'Local' ? `<p><strong>Mesa:</strong> ${p.mesa}</p>` : ''}
+<p><strong>Fecha compromiso:</strong> ${p.fechaCompromiso ? new Date(p.fechaCompromiso).toLocaleString() : 'No especificada'}</p>
 
       <h4 class="font-semibold mt-4">
         Productos:
